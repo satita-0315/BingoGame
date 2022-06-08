@@ -2,6 +2,8 @@ package com.example.bingogame;
 
 import java.util.*;
 
+//コミット、プッシュのために変更箇所作成文
+
 // 3 x 3のビンゴゲーム
 public class BingoGame {
     public static void main(String[] args) {
