@@ -3,9 +3,8 @@ package com.example.bingogame;
 import java.util.Random;
 
 public class BingoNumbers {
-    // 数字を格納 ひとまず30に設定
     public static int[] makeNumbers() {
-        int[] numbers = new int[30];
+        int[] numbers = new int[75];
         for ( int i = 0; i < numbers.length; i++) {
             numbers[i] = i + 1;
         }

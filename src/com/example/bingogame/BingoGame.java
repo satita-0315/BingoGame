@@ -8,7 +8,8 @@ public class BingoGame {
         int[] hitNumbers = BingoMachine.makeHitNumbers();
         Scanner scanner = new Scanner(System.in);
         System.out.println("ビンゴゲームを始めます！(Enterで進みます）");
-        System.out.println(Arrays.deepToString(BingoCard.makeBingoCard(5)));
+        System.out.println(Arrays.toString(BingoCard.makeBingoCard()));
+//        System.out.println(Arrays.deepToString(BingoCard.makeBingoCard(5)));
         scanner.nextLine();
         //ゲームスタート
         for (int n = 0; n < hitNumbers.length; n++) {
