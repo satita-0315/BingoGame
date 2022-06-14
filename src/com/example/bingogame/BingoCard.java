@@ -3,12 +3,16 @@ package com.example.bingogame;
 import java.util.*;
 
 public class BingoCard {
+    int[][] card;
+    int[][] hitPlace; //ビンゴカードのHitした場所を保持、この値を判定機がチェックしビンゴかどうか判断する
 
-    //コンストラクタでインスタンス化した際に、属性の値を初期化するようにする
-    public static int[] makeBingoCard() {
+    public BingoCard() {
+        this.card = makeBingoCard();
+    }
+    public static int[][] makeBingoCard() {
         int width = 5;
-        String mark = "◯";
-//        Integer intMark = Integer.valueOf(mark);
+
+        //この辺の処理綺麗にしたい
         int[][] card = new int[width][width];
         int[] columnB = BingoNumbers.shuffleNumbers(Arrays.copyOfRange(BingoNumbers.makeNumbers(), 0, 15));
         int[] columnI = BingoNumbers.shuffleNumbers(Arrays.copyOfRange(BingoNumbers.makeNumbers(), 15, 30));
@@ -23,33 +27,60 @@ public class BingoCard {
             card[3][i] = columnG[i];
             card[4][i] = columnO[i];
         }
+
+        //ビンゴカードの数字を並び替え
         int[][] bingoCard = new int[width][width];
-        for (int i = 0; i < width; i++) {
+        for (int i = 0; i < card.length; i++) {
             for (int j = 0; j < card[i].length; j++) {
-                //真ん中に◯をあける処理 うまくいかない
-//                if (i == 2 && j == 2) {
-//                    bingoCard[j][i] = intMark.intValue();
-//                    continue;
-//                }
+//                真ん中に0を格納
+                if (i == 2 && j == 2) {
+                    bingoCard[j][i] = 0;
+                    continue;
+                }
                 bingoCard[j][i] = card[i][j];
             }
         }
-        printCard(bingoCard);
-//        System.out.println(Arrays.deepToString(bingoCard));
 
-        return columnB;
+        printCard(bingoCard);
+        return bingoCard;
     }
+
+    //カードに穴（◯）をあける
+    public static String makeHole() {
+        String h = "◯";
+        return h;
+    }
+
+    //カードの表示
     public static void printCard(int[][] array) {
         for (int i = 0; i <  array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                if (j != 0){
+                if (j != 0) {
                     System.out.print(" ");
                 }
-                System.out.printf("%3d", array[i][j]);
+                String s = array[i][j] == 0? makeHole(): String.valueOf(array[i][j]);
+                System.out.printf("%3s", s);
             }
             System.out.println();
         }
+    }
 
+    //ビンゴマシーンの数字がカードにあるか判定する、あればその数字を0に変更
+    public static int[][] checkNumbers(int[][] card, int num) {
+        int i, j;
+        int target = num;
+        boolean found = false;
+        for ( i = 0; i < card.length; i++) {
+            for ( j = 0; j < card[i].length; j++) {
+                if (card[i][j] == target) {
+                    found = true;
+                    card[i][j]  = 0;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+        return card;
     }
 
 
